@@ -1,6 +1,7 @@
 package essentials;
 
 import lejos.nxt.*;
+import java.util.ArrayList;
 import java.awt.*;
 
 public class ObstacleDetector {
@@ -9,7 +10,7 @@ public class ObstacleDetector {
 	private TouchSensor rightBumper;
 	private UltrasonicSensor sensor;
 	
-	private Point[] obstacleLocations;
+	private ArrayList<Point> obstacleLocations;
 	
 	public boolean waitForRightPress() {
 		return false;
@@ -23,7 +24,7 @@ public class ObstacleDetector {
 		
 	}
 	
-	public Point[] getObstacleLocations() {
+	public ArrayList<Point> getObstacleLocations() {
 		return obstacleLocations;
 	}
 

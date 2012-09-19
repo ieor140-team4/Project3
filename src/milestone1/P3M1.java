@@ -1,13 +1,10 @@
 package milestone1;
 
 import java.io.File;
-
-import lejos.nxt.Button;
-import lejos.nxt.Motor;
-import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
-import lejos.nxt.TouchSensor;
+import essentials.*;
+import lejos.robotics.navigation.DifferentialPilot;
 import lejos.util.Delay;
+import lejos.nxt.*;
 
 public class P3M1 {
 
@@ -16,7 +13,27 @@ public class P3M1 {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub**
+		
+		//Configure the Differential Pilot using the measurements of our robot.
+		double trackWidth = 9.2 + 2.6;
+		double wheelDiam = 5.56;
+		DifferentialPilot pilot = new DifferentialPilot(wheelDiam,trackWidth,Motor.A,Motor.C); //need to fix
 
+		NXTRegulatedMotor sensorMotor = Motor.B;
+		LightSensor lightSensor = new LightSensor(SensorPort.S2);
+		
+		Mover mover = new Mover(pilot);
+		Scanner scanner = new Scanner(sensorMotor, lightSensor);
+		
+		Navigator navigator = new Navigator(mover, scanner);
+		
+		Button.waitForAnyPress();
+		
+		navigator.go();
+		
+		sensorMotor.rotateTo(0);
+
+		/*
 		TouchSensor ts1 = new TouchSensor(SensorPort.S1);
 		TouchSensor ts2 = new TouchSensor(SensorPort.S4);
 
@@ -45,7 +62,8 @@ public class P3M1 {
 			if (Button.RIGHT.isDown()) {
 				Sound.playNote(Sound.PIANO, 440, 200);
 			}
-		}
+			
+		}*/
 
 	}
 
