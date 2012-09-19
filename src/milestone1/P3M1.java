@@ -29,7 +29,7 @@ public class P3M1 {
 		
 		Button.waitForAnyPress();
 		
-		navigator.go();
+		navigator.go(8);
 		
 		sensorMotor.rotateTo(0);
 
