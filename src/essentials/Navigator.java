@@ -26,8 +26,10 @@ public class Navigator {
 	 * turn around and reset our distance from the light.
 	 */
 	public void go(int numLaps) {
+		int turnDist = 60;
+		
 		for (int i = 0; i < numLaps; i++) {
-			while (distanceFromLight > 40) {
+			while (distanceFromLight > turnDist) {
 				scanner.scanForData();
 				Point lightLocation = scanner.getLightLocation();
 

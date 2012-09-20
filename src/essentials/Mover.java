@@ -21,8 +21,8 @@ public class Mover {
 	 * of 0.8 which seems to work fine.
 	 */
 	public void goToLight(int angle) {
-		System.out.println("Angle: " + 0.8*angle);
-		pilot.steer(0.8 * angle);
+		System.out.println("Angle: " + angle);
+		pilot.steer(0.33 * angle, angle, true);
 	}
 	
 	//Empty for now.
@@ -38,7 +38,7 @@ public class Mover {
 	 * to start moving - this saves a little time.
 	 */
 	public void turnAround() {
-		pilot.rotate(180);
+		pilot.rotate(200);
 		pilot.steer(0);
 	}
 

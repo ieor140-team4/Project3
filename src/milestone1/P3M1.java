@@ -18,9 +18,11 @@ public class P3M1 {
 		double trackWidth = 9.2 + 2.6;
 		double wheelDiam = 5.56;
 		DifferentialPilot pilot = new DifferentialPilot(wheelDiam,trackWidth,Motor.A,Motor.C); //need to fix
-
+		pilot.setTravelSpeed(40);
+		
 		NXTRegulatedMotor sensorMotor = Motor.B;
 		LightSensor lightSensor = new LightSensor(SensorPort.S2);
+		lightSensor.setFloodlight(false);
 		
 		Mover mover = new Mover(pilot);
 		Scanner scanner = new Scanner(sensorMotor, lightSensor);
@@ -29,7 +31,7 @@ public class P3M1 {
 		
 		Button.waitForAnyPress();
 		
-		navigator.go(8);
+		navigator.go(2);
 		
 		sensorMotor.rotateTo(0);
 
