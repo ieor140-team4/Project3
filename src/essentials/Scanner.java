@@ -22,7 +22,7 @@ public class Scanner {
 	private Point highestLightValue;
 	
 	public Scanner(NXTRegulatedMotor scannerMotor, LightSensor ls) {
-		detector = new ObstacleDetector();
+		detector = new ObstacleDetector(SensorPort.S1, SensorPort.S4, SensorPort.S3);
 		sensor = ls;
 		motor = scannerMotor;
 		obstacleLocations = new ArrayList<Point>();
@@ -81,7 +81,7 @@ public class Scanner {
 	
 	//Empty for now.
 	public void scanForObjects(int angle) {
-		detector.findObstacles();
+		detector.findObstacles(angle);
 		obstacleLocations = detector.getObstacleLocations();
 	}
 	
