@@ -27,7 +27,9 @@ public class P3M1 {
 		Mover mover = new Mover(pilot);
 		Scanner scanner = new Scanner(sensorMotor, lightSensor);
 		
-		Navigator navigator = new Navigator(mover, scanner);
+		ObstacleDetector detector = new ObstacleDetector(SensorPort.S4, SensorPort.S1, SensorPort.S3);
+		
+		Navigator navigator = new Navigator(mover, scanner, detector);
 		
 		Button.waitForAnyPress();
 		

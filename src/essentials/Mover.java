@@ -26,10 +26,6 @@ public class Mover {
 	}
 	
 	//Empty for now.
-	public void avoidObstacles(ArrayList<Point> obstacles) {
-	}
-	
-	//Empty for now.
 	public void backUpFromObstacle() {
 	}
 	
@@ -40,6 +36,10 @@ public class Mover {
 	public void turnAround() {
 		pilot.rotate(200);
 		pilot.steer(0);
+	}
+	
+	public void stop() {
+		pilot.stop();
 	}
 
 }

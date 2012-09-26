@@ -18,15 +18,13 @@ public class Scanner {
 	/* Each point is a polar point, with direction as the x
 	 * and angle as the y.
 	 */
-	private ArrayList<Point> obstacleLocations;
-	private Point highestLightValue;
+	private int highestLightValue;
+	private PolarPoint lightLocation;
 	
 	public Scanner(NXTRegulatedMotor scannerMotor, LightSensor ls) {
-		detector = new ObstacleDetector(SensorPort.S1, SensorPort.S4, SensorPort.S3);
 		sensor = ls;
 		motor = scannerMotor;
-		obstacleLocations = new ArrayList<Point>();
-		highestLightValue = new Point(0,0);
+		highestLightValue = 0;
 	}
 	
 	/* Scans for data, which should include both light sources and obstacles.
@@ -38,7 +36,7 @@ public class Scanner {
 		/* On each scan, we need to reset the highest light value so we
 		 * don't keep track of what we saw last scan.
 		 */
-		highestLightValue = new Point(0,0);
+		highestLightValue = 0;
 		
 		/* This code is mostly copied from the ScanRecorder class in the
 		 * experimental work. We rotate from -40 to 40 and at each angle
@@ -74,20 +72,16 @@ public class Scanner {
 	 */
 	public void scanForLight(int angle) {
 		int lv = sensor.getLightValue();
-		if (lv > highestLightValue.x) {
-			highestLightValue = new Point(lv, angle);
+		if (lv > highestLightValue) {
+			highestLightValue = lv;
+			double distance = 3385 * Math.exp(-0.06 * lv); //From regression equation.
+			lightLocation = new PolarPoint((int) Math.round(distance), angle);
 		}
 	}
 	
 	//Empty for now.
 	public void scanForObjects(int angle) {
 		detector.findObstacles(angle);
-		obstacleLocations = detector.getObstacleLocations();
-	}
-	
-	//Gets the locations of the obstacles.
-	public ArrayList<Point> getObstacleLocations() {
-		return obstacleLocations;
 	}
 	
 	/* Transforms the light reading into a distance using a 
@@ -95,12 +89,12 @@ public class Scanner {
 	 * returns a polar point that gives distance (in cm) and angle to
 	 * the light source.
 	 */
-	public Point getLightLocation() {
-		double distance = 3385 * Math.exp(-0.06 * highestLightValue.x); //Our regression equation
-		
-		Point result = new Point((int) distance, highestLightValue.y);
-		
-		return result;
+	public PolarPoint getLightLocation() {
+		return lightLocation;
+	}
+	
+	public void addDetector(ObstacleDetector d) {
+		detector = d;
 	}
 
 }
