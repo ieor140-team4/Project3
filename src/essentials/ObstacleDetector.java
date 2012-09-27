@@ -54,7 +54,7 @@ public class ObstacleDetector {
 		}
 
 		public void stateChanged(SensorPort port, int aOldValue, int aNewValue) {
-			if (aNewValue < 190) {
+			if ((aNewValue < 190) && (aOldValue > 190)) {
 				System.out.println("Alert! " + aOldValue + " " + aNewValue);
 				Sound.playNote(Sound.PIANO, 400, 50);
 				
@@ -68,7 +68,7 @@ public class ObstacleDetector {
 				}
 				
 				
-			} else if (aNewValue > 1000) {
+			} else if ((aNewValue > 1000) && (aOldValue < 1000)) {
 				System.out.println("Released!" + aOldValue + " " + aNewValue);
 				Sound.playNote(Sound.PIANO, 550, 50);
 				
@@ -83,7 +83,8 @@ public class ObstacleDetector {
 	private class SonicDetectorListener implements SensorPortListener {
 		
 		public void stateChanged(SensorPort port, int aOldValue, int aNewValue) {
-			
+			System.out.println("Changed: " + aOldValue + " -> " + aNewValue);
+			Sound.playNote(Sound.PIANO, 300, 50);
 		}
 	}
 

@@ -13,28 +13,27 @@ public class P3M1 {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub**
-		
+
 		//Configure the Differential Pilot using the measurements of our robot.
 		double trackWidth = 9.2 + 2.6;
 		double wheelDiam = 5.56;
 		DifferentialPilot pilot = new DifferentialPilot(wheelDiam,trackWidth,Motor.A,Motor.C); //need to fix
 		pilot.setTravelSpeed(40);
-		
+
 		NXTRegulatedMotor sensorMotor = Motor.B;
 		LightSensor lightSensor = new LightSensor(SensorPort.S2);
 		lightSensor.setFloodlight(false);
-		
+
 		Mover mover = new Mover(pilot);
 		Scanner scanner = new Scanner(sensorMotor, lightSensor);
-		
+
 		ObstacleDetector detector = new ObstacleDetector(SensorPort.S4, SensorPort.S1, SensorPort.S3);
-		
+
 		Navigator navigator = new Navigator(mover, scanner, detector);
-		
+
+
 		Button.waitForAnyPress();
-		
 		navigator.go(2);
-		
 		sensorMotor.rotateTo(0);
 
 		/*
@@ -66,7 +65,7 @@ public class P3M1 {
 			if (Button.RIGHT.isDown()) {
 				Sound.playNote(Sound.PIANO, 440, 200);
 			}
-			
+
 		}*/
 
 	}

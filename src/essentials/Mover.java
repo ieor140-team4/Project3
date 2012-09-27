@@ -27,6 +27,7 @@ public class Mover {
 	
 	//Empty for now.
 	public void backUpFromObstacle() {
+		pilot.travel(-10);
 	}
 	
 	/* Turns the robot 180 degrees so that it can head back towards the other
