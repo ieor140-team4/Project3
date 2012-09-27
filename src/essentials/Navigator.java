@@ -24,7 +24,7 @@ public class Navigator implements ObstacleListener {
 		s.addDetector(d);
 		d.setObstacleListener(this);
 		distanceFromLight = 20*30.55; // or 0
-		obstacle = true;
+		obstacle = false;
 	}
 
 	/* Controls the robot and makes it go through the specified number
@@ -56,16 +56,15 @@ public class Navigator implements ObstacleListener {
 	}
 
 	public void objectFound(PolarPoint p) {
+		System.out.println("Object found! " + detector.getObstacleLocation().toString());
+		
 		obstacle = true;
 		mover.stop();
 		
 		mover.backUpFromObstacle();
-	
+		
 		System.out.println("Waiting for button to be pressed...");
 		Button.waitForAnyPress();
-	}
-
-	public void objectReleased() {
 		
 		obstacle = false;
 	}
