@@ -80,7 +80,8 @@ public class ObstacleDetector {
 
 	/**
 	 * This is a listener that waits for a press on one of the touch sensors.
-	 * Then it tells the obstacleListener what 
+	 * Then it tells the obstacleListener where that obstacle is located and
+	 * calls its obstacleFound method.
 	 * 
 	 * @author nate.kb
 	 *
@@ -89,11 +90,17 @@ public class ObstacleDetector {
 
 		private boolean isLeft;
 
+		/**
+		 * 
+		 * @param left True if it's the left touch sensor, false if it's the right.
+		 */
 		public TouchDetectorListener(boolean left) {
 			isLeft = left;
 		}
 
 		/**
+		 * When the touch sensor becomes pressed, it passes the information
+		 * to the obstacleListener if there is one attached.
 		 * 
 		 */
 		public void stateChanged(SensorPort port, int aOldValue, int aNewValue) {

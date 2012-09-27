@@ -4,9 +4,12 @@ import java.awt.*;
 
 import lejos.nxt.Button;
 
-/* The navigator is the top level class which controls the Mover and Scanners
+/**
+ * The navigator is the top level class which controls the Mover and Scanners
  * of the robot. It keeps track of how far we are from the light and keeps track
  * of how to move and scan simultaneously, and what to do when we sense objects.
+ * 
+ * @author nate.kb
  */
 public class Navigator implements ObstacleListener {
 
@@ -27,10 +30,13 @@ public class Navigator implements ObstacleListener {
 		obstacle = false;
 	}
 
-	/* Controls the robot and makes it go through the specified number
+	/**
+	 * Controls the robot and makes it go through the specified number
 	 * of laps. Within each lap, we repeat a cycle of scan-update-steer,
 	 * until a scan tells us we are within 40cm of the light. Then we
 	 * turn around and reset our distance from the light.
+	 * 
+	 * @param numLaps The number of 1-way laps the robot should go.
 	 */
 	public void go(int numLaps) {
 		int turnDist = 60;
@@ -55,6 +61,12 @@ public class Navigator implements ObstacleListener {
 		}
 	}
 
+	/** 
+	 * When an object is found in the obstacle detector, this method
+	 * implements the obstacle avoiding stuff. Right now, all that means
+	 * is it stops, backs up from the obstacle, and waits for a button press.
+	 * 
+	 */
 	public void objectFound(PolarPoint p) {
 		System.out.println("Object found! " + detector.getObstacleLocation().toString());
 		

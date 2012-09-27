@@ -17,6 +17,7 @@ import java.util.ArrayList;
  * The scanner uses the rotating assembly to sweep back and forth, scanning
  * for both light and objects in the path.
  * 
+ * @author nate.kb
  */
 public class Scanner {
 
