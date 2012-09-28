@@ -44,7 +44,7 @@ public class Navigator implements ObstacleListener {
 		for (int i = 0; i < numLaps; i++) {
 			while (distanceFromLight > turnDist) {
 				if (!obstacle) {
-					scanner.scanForData();
+					scanner.scanForData(-30,60);
 					PolarPoint lightLocation = scanner.getLightLocation();
 
 					System.out.println("Light @ " + lightLocation.toString());

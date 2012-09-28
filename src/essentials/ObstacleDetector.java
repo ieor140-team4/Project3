@@ -10,12 +10,16 @@ import lejos.nxt.TouchSensor;
 import lejos.nxt.UltrasonicSensor;
 
 /**
+ * The obstacle detector controls all the ways the robot has to detect
+ * obstacles, namely the two touch sensors as well as the ultrasonic
+ * sensor. Once it finds an obstacle through one of these methods,
+ * it alerts its attached obstacle listeners that an object has been found.
  * 
  * @author nate.kb
  *
  */
 public class ObstacleDetector {
-
+	
 	private TouchSensor leftBumper;
 	private TouchSensor rightBumper;
 	private UltrasonicSensor sensor;
@@ -23,6 +27,12 @@ public class ObstacleDetector {
 	private PolarPoint obstacleLocation;
 	private ObstacleListener obstacleListener;
 
+	/**
+	 * 
+	 * @param lbPort the SensorPort that corresponds to the left bumper.
+	 * @param rbPort the SensorPort that corresponds to the right bumper.
+	 * @param usPort the SensorPort that corresponds to the ultrasonic sensor.
+	 */
 	public ObstacleDetector(SensorPort lbPort, SensorPort rbPort, SensorPort usPort) {
 		leftBumper = new TouchSensor(lbPort);
 		rightBumper = new TouchSensor(rbPort);
@@ -40,15 +50,15 @@ public class ObstacleDetector {
 	 * of the head), it calls any attached obstacle listeners' obstacle
 	 * found methods.
 	 * 
-	 * @param angle the angle that the head is pointing at right now.
+	 * @param angle          the angle that the head is pointing at right now.
+	 * @param distThreshold  the max distance that we can see an obstacle at
+	 * @param angleThreshold the max angle that we can see obstacles at on either side of forward
+	 * 
 	 */
-	public void findObstacles(int angle) {
+	public void findObstacles(int angle, int distThreshold, int angleThreshold) {
 		int distToObstacle = sensor.getDistance();
 
 		PolarPoint obstacle = new PolarPoint(distToObstacle, angle);
-
-		int distThreshold = 25;
-		int angleThreshold = 15;
 
 		if ((obstacle.dist < distThreshold) && 
 				(Math.abs(obstacle.angle) < angleThreshold)) {
