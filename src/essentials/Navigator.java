@@ -18,12 +18,14 @@ public class Navigator implements ObstacleListener {
 	private double distanceFromLight;
 	private ObstacleDetector detector;
 	private boolean obstacle;
+	private Avoider avoider;
 
 
-	public Navigator(Mover m, Scanner s, ObstacleDetector d) {
+	public Navigator(Mover m, Scanner s, ObstacleDetector d, Avoider a) {
 		mover = m;
 		detector = d;
 		scanner = s;
+		avoider = a;
 		s.addDetector(d);
 		d.setObstacleListener(this);
 		distanceFromLight = 20*30.55; // or 0
@@ -56,7 +58,7 @@ public class Navigator implements ObstacleListener {
 				}
 			}
 
-			mover.turnAround();
+			mover.turn(180, true);
 			distanceFromLight = 20*30.55;
 		}
 	}
@@ -71,12 +73,10 @@ public class Navigator implements ObstacleListener {
 		System.out.println("Object found! " + detector.getObstacleLocation().toString());
 		
 		obstacle = true;
+		avoider.stopAvoiding();
+		
 		mover.stop();
-		
-		mover.backUpFromObstacle();
-		
-		System.out.println("Waiting for button to be pressed...");
-		Button.waitForAnyPress();
+		avoider.avoid(p);
 		
 		obstacle = false;
 	}

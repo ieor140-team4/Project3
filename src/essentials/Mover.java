@@ -13,9 +13,9 @@ import java.util.*;
  * @author nate.kb
  */
 public class Mover {
-	
+
 	private DifferentialPilot pilot;
-	
+
 	public Mover(DifferentialPilot dp) {
 		pilot = dp;
 	}
@@ -28,31 +28,54 @@ public class Mover {
 		System.out.println("Angle: " + angle);
 		pilot.steer(0.33 * angle, angle, true);
 	}
-	
+
 	/**
-	 * Travels 10 centimeters backwards.
+	 * Turns the robot the specified number of degrees.
 	 * 
+	 * @param angle         the degrees we want to rotate through
+	 * @param immediateMove if true, we start moving immediately forward to save time
 	 */
-	public void backUpFromObstacle() {
-		pilot.travel(-10);
+	public void turn(int angle, boolean immediateMove) {
+		pilot.rotate(angle);
+		if (immediateMove) {
+			pilot.steer(0);
+		}
 	}
-	
-	/**
-	 * Turns the robot 180 degrees so that it can head back towards the other
-	 * light. Then begins to go forward so we don't have to wait for a scan
-	 * to start moving - this saves a little time.
-	 */
-	public void turnAround() {
-		pilot.rotate(200);
-		pilot.steer(0);
-	}
-	
+
 	/**
 	 * Just stops the pilot.
 	 * 
 	 */
 	public void stop() {
 		pilot.stop();
+	}
+	
+	/**
+	 * A wrapper for pilot's travel method.
+	 * 
+	 * @param distance the number of centimeters to travel
+	 */
+	public void travel(double distance) {
+		pilot.travel(distance);
+	}
+	
+	/**
+	 * A wrapper for pilot's other travel method.
+	 * 
+	 * @param distance        # cms to travel
+	 * @param immediateReturn if yes, return immediately
+	 */
+	public void travel(double distance, boolean immediateReturn) {
+		pilot.travel(distance, immediateReturn);
+	}
+	
+	
+	/** A wrapper for the pilot's isMoving() method.
+	 * 
+	 * @return yes if the robot is moving.
+	 */
+	public boolean isMoving() {
+		return pilot.isMoving();
 	}
 
 }

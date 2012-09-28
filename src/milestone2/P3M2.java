@@ -28,8 +28,9 @@ public class P3M2 {
 		Scanner scanner = new Scanner(sensorMotor, lightSensor);
 
 		ObstacleDetector detector = new ObstacleDetector(SensorPort.S4, SensorPort.S1, SensorPort.S3);
-
-		Navigator navigator = new Navigator(mover, scanner, detector);
+		Avoider avoider = new Avoider(mover, scanner);
+		
+		Navigator navigator = new Navigator(mover, scanner, detector, avoider);
 
 
 		Button.waitForAnyPress();
