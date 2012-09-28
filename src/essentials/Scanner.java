@@ -36,29 +36,33 @@ public class Scanner {
 	
 	/**
 	 * Scans for data, which should include both light sources and obstacles.
-	 * Rotates from -40 to 40, which should be enough to find the light source
+	 * Rotates from -30 to 30, which should be enough to find the light source
 	 * from anywhere on the course, as well as detect obstacles ahead of us.
 	 * <p>
 	 * However, doing such a large sweep may decrease performance as it takes longer
 	 * to complete each scan.
 	 * 
+	 * @param startAngle the angle that the scan starts from. -90 = 90 degrees right of forward
+	 * @param scanAngle  the angle that the scan rotates through
 	 */
-	public void scanForData() {
+	public void scanForData(int startAngle, int scanAngle) {
 		
-		/* On each scan, we need to reset the highest light value so we
+		/* 
+		 * On each scan, we need to reset the highest light value so we
 		 * don't keep track of what we saw last scan.
 		 */
 		highestLightValue = 0;
 		
-		/* This code is mostly copied from the ScanRecorder class in the
-		 * experimental work. We rotate from -40 to 40 and at each angle
-		 * we scan for the light source and any objects.
+		/* 
+		 * This code is mostly copied from the ScanRecorder class in the
+		 * experimental work. We rotate from the start angle throuhg the
+		 * scan angle and at each angle we scan for the light source and
+		 * any objects.
 		 */
-		int startAngle = -40;
 		int oldAngle = motor.getTachoCount();
 		
 		motor.rotateTo(startAngle);
-		motor.rotate(80, true);
+		motor.rotate(scanAngle, true);
 		while (motor.isMoving()) {
 	         short angle = (short) motor.getTachoCount();
 	         if (angle != oldAngle)
@@ -67,7 +71,7 @@ public class Scanner {
 	        	 scanForObjects(angle);
 	         }
 		}
-		motor.rotate(-80, true);
+		motor.rotate(-scanAngle, true);
 		while (motor.isMoving()) {
 	         short angle = (short) motor.getTachoCount();
 	         if (angle != oldAngle)
@@ -95,9 +99,15 @@ public class Scanner {
 		}
 	}
 	
-	//Empty for now.
+	/**
+	 * Tells the obstacle detector to find any obstacles that we're looking at.
+	 * 
+	 * @param angle the angle the robot is currently facing towards
+	 */
 	public void scanForObjects(int angle) {
-		detector.findObstacles(angle);
+		int distThreshold = 30;
+		int angleThreshold = 20;
+		detector.findObstacles(angle, distThreshold, angleThreshold);
 	}
 	
 	/**
