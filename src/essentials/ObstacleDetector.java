@@ -120,9 +120,9 @@ public class ObstacleDetector {
 
 				if (obstacleListener != null) {
 					if (isLeft) {
-						obstacleLocation = new PolarPoint((int) Math.round(7 * 2.54), 25);
-					} else {
 						obstacleLocation = new PolarPoint((int) Math.round(7 * 2.54), -25);
+					} else {
+						obstacleLocation = new PolarPoint((int) Math.round(7 * 2.54), 25);
 					}
 					obstacleListener.objectFound(obstacleLocation);
 				}

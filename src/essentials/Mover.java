@@ -22,11 +22,11 @@ public class Mover {
 
 	/**
 	 * Steers the robot towards the given angle. We use a gain constant
-	 * of 0.33 which seems to work fine.
+	 * of 0.7 which seems to work fine.
 	 */
 	public void goToLight(int angle) {
 		System.out.println("Angle: " + angle);
-		pilot.steer(0.33 * angle, angle, true);
+		pilot.steer(0.45 * angle, angle, true);
 	}
 
 	/**

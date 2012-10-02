@@ -132,5 +132,10 @@ public class Scanner {
 	public void addDetector(ObstacleDetector d) {
 		detector = d;
 	}
+	
+	public void scanAtAngle(int angle) {
+		motor.rotateTo(angle);
+		scanForObjects(angle);
+	}
 
 }
