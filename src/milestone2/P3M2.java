@@ -15,7 +15,7 @@ public class P3M2 {
 		// TODO Auto-generated method stub**
 
 		//Configure the Differential Pilot using the measurements of our robot.
-		double trackWidth = 9.2 + 2.6;
+		double trackWidth = 13.5;
 		double wheelDiam = 5.56;
 		DifferentialPilot pilot = new DifferentialPilot(wheelDiam,trackWidth,Motor.A,Motor.C); //need to fix
 		pilot.setTravelSpeed(40);
@@ -30,11 +30,11 @@ public class P3M2 {
 		ObstacleDetector detector = new ObstacleDetector(SensorPort.S4, SensorPort.S1, SensorPort.S3);
 		Avoider avoider = new Avoider(mover, scanner, detector);
 		
-		Navigator navigator = new Navigator(mover, scanner, detector, avoider);
+		Navigator navigator = new Navigator(mover, scanner, detector);
 
 
 		Button.waitForAnyPress();
-		navigator.go(2);
+		navigator.go(15);
 		sensorMotor.rotateTo(0);
 
 		/*

@@ -32,6 +32,9 @@ public class Scanner {
 		sensor = ls;
 		motor = scannerMotor;
 		highestLightValue = 0;
+		
+		motor.setSpeed(6000);
+		motor.setAcceleration(10000);
 	}
 	
 	/**
@@ -133,9 +136,14 @@ public class Scanner {
 		detector = d;
 	}
 	
-	public void scanAtAngle(int angle) {
+	/**
+	 * 
+	 * @param angle
+	 * @return
+	 */
+	public PolarPoint scanAtAngle(int angle) {
 		motor.rotateTo(angle);
-		scanForObjects(angle);
+		return detector.exploratoryScan(angle);
 	}
 
 }

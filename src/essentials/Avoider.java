@@ -1,8 +1,8 @@
 package essentials;
 
-import lejos.nxt.Button;
+import java.util.Random;
+
 import lejos.nxt.Sound;
-import lejos.util.Delay;
 
 public class Avoider {
 
@@ -18,35 +18,52 @@ public class Avoider {
 	}
 
 	public void avoid(PolarPoint obstacleLocation) {
+		System.out.println("Avoiding...");
 
 		keepAvoiding = true;
 
+		int turnDirection = 0; //1 for left, -1 for right
 		boolean isLeftObstacle = true;
 		boolean isRightObstacle = true;
 
 
 		while (isLeftObstacle && isRightObstacle) {
-			mover.travel(-5);
+			System.out.println("Look left and right!");
+			mover.travel(-10);
 			
-			scanner.scanAtAngle(90);
-			isLeftObstacle = detector.getObstacleLocation().dist < 50;
-			scanner.scanAtAngle(-90);
-			isRightObstacle = detector.getObstacleLocation().dist <50;
+			isLeftObstacle = scanner.scanAtAngle(90).dist < 60;
+			isRightObstacle = scanner.scanAtAngle(-90).dist < 60;
+			System.out.println("Obstacle to right: " + isRightObstacle + " left: " + isLeftObstacle);
 		}
+		
+		scanner.scanAtAngle(0);
 
-
-		if (!isLeftObstacle) {
-			mover.turn(90, false);
-			Sound.playNote(Sound.PIANO, 200, 50);
-			System.out.println("Turning left now, will turn right later.");
-		} else if (!isRightObstacle) {
-			mover.turn(-90, false);
-			Sound.playNote(Sound.PIANO, 250, 50);
-			System.out.println("Turning right now, will turn left later.");
+		if (!isRightObstacle && isLeftObstacle) {
+			turnDirection = -1; //No right obstacle -> turn left.
+			Sound.playNote(Sound.PIANO, 200, 20);
+		} else if (!isLeftObstacle && isRightObstacle) {
+			turnDirection = 1; //No left obstacle -> turn right.
+			Sound.playNote(Sound.PIANO, 250, 20);
+		} else {
+			Random r = new Random();
+			int randomDirection = r.nextInt(2);
+			if (randomDirection == 0) {
+				randomDirection--;
+			}
+			turnDirection = randomDirection;
+			
+			Sound.playNote(Sound.PIANO, 200, 5);
+			Sound.playNote(Sound.PIANO, 250, 5);
+			Sound.playNote(Sound.PIANO, 300, 5);
+			Sound.playNote(Sound.PIANO, 350, 5);
+			Sound.playNote(Sound.PIANO, 400, 5);
+			Sound.playNote(Sound.PIANO, 450, 5);
 		}
 
 		if (keepAvoiding) {
+			mover.turn(turnDirection * 100, false);
 			mover.travel(30, false);
+			mover.turn(-1 * turnDirection * 100, true);
 		}
 
 	}

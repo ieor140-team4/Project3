@@ -87,6 +87,16 @@ public class ObstacleDetector {
 	public void setObstacleListener(ObstacleListener listener) {
 		obstacleListener = listener;
 	}
+	
+	/**
+	 * 
+	 * @param angle
+	 * @return
+	 */
+	public PolarPoint exploratoryScan(int angle) {
+		int d = sensor.getDistance();
+		return new PolarPoint(d, angle);
+	}
 
 	/**
 	 * This is a listener that waits for a press on one of the touch sensors.
